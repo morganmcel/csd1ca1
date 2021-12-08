@@ -21,16 +21,16 @@ jobs:
         dotnet-version: '5.0.x'
     - name: Build for Release
       run: dotnet build --configuration Release
-#    - name: Run unit tests
-#      run: dotnet test bmiUnitTestProject/bmiUnitTestProject.csproj --no-restore --collect "Code coverage" -l:trx
-   
-#    - name: Publish Unit Test Results
-#      uses: dorny/test-reporter@v1
-#      with:
-#       name: MS Tests                  
-#       path: '**.trx'
-#       reporter: 'dotnet-trx'                     
-#       artifact: ''
+    - name: Run unit tests
+      run: dotnet test TestProject1/TestProject1.csproj --no-restore --collect "Code coverage" -l:trx
+  
+    - name: Publish Unit Test Results
+      uses: dorny/test-reporter@v1
+      with:
+       name: MS Tests                  
+       path: '**.trx'
+       reporter: 'dotnet-trx'                     
+       artifact: ''
 
     - name: Publish
       run: dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp' 
