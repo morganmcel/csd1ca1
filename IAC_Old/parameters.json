@@ -1,0 +1,12 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "sites_bmi_morganmc_name": {
+        "value": "bmi-morganmc-dev"
+      },
+      "serverfarms_bmi202120211127184318Plan_externalid": {
+        "value": "/subscriptions/bf62df4b-3ac0-4f1d-9671-14a98c945779/resourceGroups/TUD-Lab1/providers/Microsoft.Web/serverfarms/bmi202120211127184318Plan"
+      }
+    }
+}
