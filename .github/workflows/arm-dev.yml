@@ -32,6 +32,16 @@ jobs:
       # output containerName variable from template
     - run: echo ${{ steps.deploy.outputs.containerName }}
 
+    - name: Get WebApp/FunctionApp publish profile
+      id: webapp-dev
+      uses: aliencube/publish-profile-actions@v1
+      env:
+        AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      with:
+        resourceGroupName: ${{ secrets.AZURE_RG }}
+        appName: "morganmc-bmi"
+
+
     - name: Setup .NET Core SDK
       uses: actions/setup-dotnet@v1.7.2
       with:
@@ -57,5 +67,5 @@ jobs:
       uses: azure/webapps-deploy@v2
       with: 
         app-name: ${{ env.AZURE_WEBAPP_NAME }}                        # your app name
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
+        publish-profile: ${{ steps.webapp-dev.outputs.profile }} # Retrieved from step above
         package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp'
