@@ -1,12 +1,9 @@
 name: CreateAzureWebAppDEV       
 
-
 on: 
  push:
    branches: [ develop ]
  
-
-name: Azure ARM
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
