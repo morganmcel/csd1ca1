@@ -23,7 +23,7 @@ jobs:
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
-        template: .\IAC\mstemplate.json
+        template: .\IAC-Templates\mstemplate.json
         parameters: webAppName="morganmc-bmi"
 
       # output containerName variable from template
