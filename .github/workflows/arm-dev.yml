@@ -27,7 +27,7 @@ jobs:
       run: echo AZURE_WEBAPP_NAME=bmi-$(openssl rand -hex 2) >> $GITHUB_ENV
       
     - name: Set URI Variable  
-      run: echo URI=${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net >> $GITHUB_ENV
+      run: echo URI=https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net >> $GITHUB_ENV
 
       # Deploy ARM template
     - name: Run ARM deploy
