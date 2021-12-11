@@ -24,8 +24,8 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: generate random WebAppName based on timestamp
-        run: echo AZURE_WEBAPP_NAME=morganmc--$(date +%s) >> $GITHUB_ENV
+    - name: generate random WebAppName based on timestamp
+      run: echo AZURE_WEBAPP_NAME=morganmc--$(date +%s) >> $GITHUB_ENV
 
 
       # Deploy ARM template
