@@ -25,6 +25,8 @@ jobs:
 
     - name: Generate random WebAppName
       run: echo AZURE_WEBAPP_NAME=bmi-$(openssl rand -hex 2) >> $GITHUB_ENV
+      
+    - name: Set URI Variable  
       run: echo URI='${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net' >> $GITHUB_ENV
 
       # Deploy ARM template
