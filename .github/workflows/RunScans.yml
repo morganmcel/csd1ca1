@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Run SonarCloud Scans
     runs-on: windows-latest
     steps:
       - name: Set up JDK 11
