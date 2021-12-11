@@ -1,5 +1,9 @@
 name: CreateAzureWebAppDEV       
 
+env:
+  AZURE_WEBAPP_NAME: bmi-morganmc            # set this to your application's name
+  AZURE_WEBAPP_PACKAGE_PATH: 'publish'              # set this to the path to your web app project
+
 on: 
  push:
    branches: [ develop ]
@@ -27,7 +31,7 @@ jobs:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: IAC-Templates/mstemplate.json
-        parameters: webAppName="morganmc-bmi"
+        parameters: webAppName= ${{ env.AZURE_WEBAPP_NAME }}
 
       # output containerName variable from template
 #    - run: echo ${{ steps.deploy.outputs.containerName }}
@@ -39,7 +43,7 @@ jobs:
         AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
       with:
         resourceGroupName: ${{ secrets.AZURE_RG }}
-        appName: "morganmc-bmi"
+        appName: ${{ env.AZURE_WEBAPP_NAME }}
 
 
     - name: Setup .NET Core SDK
