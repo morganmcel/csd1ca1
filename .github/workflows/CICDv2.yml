@@ -75,6 +75,8 @@ jobs:
         publish-profile: ${{ steps.webapp-dev.outputs.profile }} # Retrieved from step above
         package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp'
 
+
+# Run Zap Scan on deployed image
     - name: Pull Docker image for ZAP
       run: docker pull owasp/zap2docker-weekly
 
