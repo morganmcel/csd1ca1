@@ -5,8 +5,9 @@ on:
    branches: [ develop ]
  
 jobs:
+
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
 
       # Checkout code
