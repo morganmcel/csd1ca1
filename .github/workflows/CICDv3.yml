@@ -17,9 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Branch name
-      #run: echo running on branch ${GITHUB_REF##*/}
       run: echo Branch=${GITHUB_REF##*/} >> $GITHUB_ENV
 
+    - name: Output branch-name
+      run: echo running on branch ${{ env.Branch }}
+      
       # Checkout code
     - uses: actions/checkout@main
       with:
