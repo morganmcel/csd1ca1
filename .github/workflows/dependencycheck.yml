@@ -1,0 +1,31 @@
+# OWASP Dependency checker
+
+name: OWASP Dependency Checker       
+  
+on: 
+ push:
+   branches: [ develop ]
+
+jobs:
+  dependency_check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Depcheck
+        uses: dependency-check/Dependency-Check_Action@main
+        id: Depcheck
+        with:
+          project: 'BMI'
+          path: '.'
+          format: 'HTML'    
+          args: >
+            --failOnCVSS 7            
+          # fail if CVSS score (CVE scoring system) is High >=7
+          
+      - name: Upload Test results
+        uses: actions/upload-artifact@master
+        with:
+           name: Depcheck report
+           path: ${{github.workspace}}/reports
