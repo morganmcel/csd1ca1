@@ -24,6 +24,13 @@
         "description": "The SKU of App Service Plan."
       }
     },
+    "tagValues": {
+      "type": "object",
+      "defaultValue": {
+        "Dept": "TUD-MSc",
+        "Environment": "Production"
+      }
+    },
     "language": {
       "type": "string",
       "defaultValue": ".net",
@@ -84,9 +91,10 @@
   "resources": [
     {
       "type": "Microsoft.Web/serverfarms",
-      "apiVersion": "2020-06-01",
+      "apiVersion": "2018-02-01",
       "name": "[variables('appServicePlanPortalName')]",
       "location": "[parameters('location')]",
+      "tags": "[parameters('tagValues')]",
       "sku": {
         "name": "[parameters('sku')]"
       }

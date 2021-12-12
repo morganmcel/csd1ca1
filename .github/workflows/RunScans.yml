@@ -1,13 +1,18 @@
-name: Build
+name: Run SonarCloud scan
+
 on:
-  push:
-    branches:
-      - master
+ workflow_dispatch:        
+
+#on:
+#  push:
+#    branches:
+#      - master
   pull_request:
     types: [opened, synchronize, reopened]
+
 jobs:
   build:
-    name: Build
+    name: Run SonarCloud Scans
     runs-on: windows-latest
     steps:
       - name: Set up JDK 11

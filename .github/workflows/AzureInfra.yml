@@ -1,0 +1,38 @@
+name: CreateAzureInfrastructure
+
+env:
+  AZURE_WEBAPP_PACKAGE_PATH: 'publish'              # set this to the path to your web app project
+  AZURE_WEBAPP_NAME: 'mmce-bmi'
+
+#on:
+# workflow_dispatch:        
+
+on: 
+ push:
+   branches: [ master ]
+   paths:
+    - IAC-Templates/**
+ 
+jobs:
+
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+      # Checkout code
+    - uses: actions/checkout@main
+
+      # Log into Azure
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # Deploy ARM template
+    - name: Run ARM deploy
+      uses: azure/arm-deploy@v1
+      with:
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+        resourceGroupName: ${{ secrets.AZURE_RG }}
+        template: IAC-Templates/azuredeploy.json
+        parameters: IAC-Templates/azuredeploy.parameters.json
+

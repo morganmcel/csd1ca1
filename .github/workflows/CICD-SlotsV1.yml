@@ -1,0 +1,55 @@
+name: CreateAzureWebApp     
+
+env:
+  AZURE_WEBAPP_PACKAGE_PATH: 'publish'              # set this to the path to your web app project
+  AZURE_WEBAPP_NAME: 'mmce-bmi-final'
+
+on:
+ workflow_dispatch:        
+ 
+jobs:
+
+  build-and-deploy:
+    runs-on: windows-latest
+    steps:
+
+      # Checkout code
+    - uses: actions/checkout@main
+      with:
+        ref: develop
+
+    - name: Branch name
+      run: echo running on branch ${GITHUB_REF##*/}
+
+      # Log into Azure
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+#    - name: Generate random WebAppName
+#      run: echo AZURE_WEBAPP_NAME=bmi-$(openssl rand -hex 2) >> $GITHUB_ENV
+      
+#    - name: Set URI Variable  
+#      run: echo URI=https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net >> $GITHUB_ENV
+
+      # Deploy ARM template
+    - name: Run ARM deploy
+      uses: azure/arm-deploy@v1
+      with:
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+        resourceGroupName: ${{ secrets.AZURE_RG }}
+        template: IAC-Templates/azuredeploy.json
+        parameters: baseResourceName=${{ env.AZURE_WEBAPP_NAME }}
+
+    - name: Get publish Profile
+      id: fncapp
+      shell: pwsh
+      run: |
+               $profile=Get-AzWebAppSlotPublishingProfile -ResourceGroupName "CSDCA1v2" -Name "morganmc-bmi2Portal" -Slot "Dev"
+               $profile = $profile.Replace("`r", "").Replace("`n", "")
+               Write-Output "::set-output name=profile::$profile"
+
+    - name: Show publish profile
+      shell: pwsh
+      run: |
+        echo ${{ steps.fncapp.outputs.profile }}
