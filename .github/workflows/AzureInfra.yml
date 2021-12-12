@@ -1,7 +1,6 @@
 name: CreateAzureInfrastructure
 
 env:
-  AZURE_WEBAPP_PACKAGE_PATH: 'publish'              # set this to the path to your web app project
   AZURE_WEBAPP_NAME: 'mmce-bmi'
 
 #on:
@@ -34,5 +33,5 @@ jobs:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: IAC-Templates/azuredeploy.json
-        parameters: IAC-Templates/azuredeploy.parameters.json
+        parameters: baseResourceName=${{ env.AZURE_WEBAPP_NAME }}
 
