@@ -4,9 +4,8 @@ env:
   AZURE_WEBAPP_PACKAGE_PATH: 'publish'              # set this to the path to your web app project
   AZURE_WEBAPP_NAME: 'mmce-bmi-final'
 
-on: 
- push:
-   branches: [ develop ]
+on:
+ workflow_dispatch:        
  
 jobs:
 
