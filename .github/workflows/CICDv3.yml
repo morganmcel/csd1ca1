@@ -2,7 +2,7 @@ name: CreateAzureWebApp
 
 env:
   AZURE_WEBAPP_PACKAGE_PATH: 'publish'              # set this to the path to your web app project
-  AZURE_WEBAPP_NAME: 'mmce-bmi'
+  AZURE_WEBAPP_NAME: 'mmce-bmiPortal'
 
 #on:
 # workflow_dispatch:        
