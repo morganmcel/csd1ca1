@@ -7,10 +7,12 @@ env:
 #on:
 # workflow_dispatch:        
 
-on: 
- push:
-#   branches: [ develop ]
- 
+on:
+  push:
+    paths-ignore:
+      - IAC-Templates/**
+ #   branches: [ develop ]
+
 jobs:
 
   build-and-deploy:
