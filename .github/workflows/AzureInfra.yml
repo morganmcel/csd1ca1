@@ -10,8 +10,8 @@ env:
 on: 
  push:
    branches: [ master ]
- paths:
-  - IAC-Templates/**
+   paths:
+    - IAC-Templates/**
  
 jobs:
 
