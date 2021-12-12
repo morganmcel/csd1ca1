@@ -68,7 +68,7 @@ export default function () {
 
     // do an initial GET, force response body so that form can be subsequently submited
 //    let res = http.get(`http://${__ENV.MY_HOSTNAME}/`, { "responseType": "text" }); mmce-bmi-dev
-    let res = http.get(`https://mmce-bmi-dev.azurewebsites.net/`, { "responseType": "text" });
+    let res = http.get('https://mmce-bmiportal-dev.azurewebsites.net', { "responseType": "text" });
 
 
     // cookies automatically handled i.e. cookies sent by server will be re-presented by the client in all subsequent requests
