@@ -37,13 +37,6 @@ jobs:
 #      run: echo URI=https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net >> $GITHUB_ENV
 
       # Deploy ARM template
-    - name: Run ARM deploy
-      uses: azure/arm-deploy@v1
-      with:
-        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-        resourceGroupName: ${{ secrets.AZURE_RG }}
-        template: IAC-Templates/mstemplate.json
-        parameters: webAppName=${{ env.AZURE_WEBAPP_NAME }}
 
     - name: Setup .NET Core SDK
       uses: actions/setup-dotnet@v1.7.2
