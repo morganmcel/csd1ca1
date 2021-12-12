@@ -34,4 +34,3 @@ jobs:
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: IAC-Templates/azuredeploy.json
         parameters: baseResourceName=${{ env.AZURE_WEBAPP_NAME }}
-
