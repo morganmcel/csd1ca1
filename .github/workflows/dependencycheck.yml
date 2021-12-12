@@ -2,9 +2,12 @@
 
 name: OWASP Dependency Checker       
   
-on: 
- push:
-   branches: [ develop ]
+on:
+ workflow_dispatch:        
+
+#on: 
+# push:
+#   branches: [ develop ]
 
 jobs:
   dependency_check:
