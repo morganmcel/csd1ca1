@@ -11,6 +11,7 @@
     },
     "appSettingName": {
       "type": "string",
+      "defaultValue": "CSD-CA1",
       "metadata": {
         "description": "Name of the app setting"
       },
@@ -19,9 +20,7 @@
     "environments": {
       "defaultValue": [
         "Dev",
-        "QA",
-        "UAT",
-        "Preview"
+        "QA"
       ],
       "type": "array",
       "metadata": {

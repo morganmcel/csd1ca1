@@ -10,6 +10,12 @@ Windows WSL has an outdated version of Azure CLI installed. To remove this and i
 	sudo apt remove azure-cli -y && sudo apt autoremove -y
 	curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
+##### Azure PowerShell Setup
+On Windows 10, PowerShell 7.2 needed to be installed from <https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell> prior to installing Azure tools
+	Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+	Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force -AllowClobber
+	Connect-AzAccount
+
 ###### Azure ARM Template validation
 
 	Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser
@@ -52,6 +58,9 @@ Further information from: <https://docs.microsoft.com/en-us/azure/azure-resource
 	az webapp deployment list-publishing-profiles --name webApp-xfroiewir2rhs --resource-group CSDCA1v2
 	az deployment group list --resource-group CSDCA1v2
 	az deployment group delete --resource-group CSDCA1v2 --name addAppService
+
+Powershell: 
+	
 	
 
 
@@ -59,3 +68,5 @@ Further information from: <https://docs.microsoft.com/en-us/azure/azure-resource
 
 	az group create --name CSDCA1v2 --location "North Europe"
 	az ad sp create-for-rbac --name CSD --role contributor --scopes /subscriptions/bf62df4b-3ac0-4f1d-9671-14a98c945779/resourceGroups/CSDCA1v2 --sdk-auth
+
+
