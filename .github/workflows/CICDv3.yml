@@ -11,6 +11,7 @@ on:
   push:
     paths-ignore:
       - IAC-Templates/**
+      - .github/workflows/**
  #   branches: [ develop ]
 
 jobs:
