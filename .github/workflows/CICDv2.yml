@@ -96,7 +96,7 @@ jobs:
     - name: Run k6 cloud test
       uses: k6io/action@v0.1
       with:
-        filename: test.js
+        filename: k6/perftest1.js
         cloud: true
         token: ${{ secrets.K6_CLOUD_API_TOKEN }}
         parameters: MY_HOSTNAME=${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net
