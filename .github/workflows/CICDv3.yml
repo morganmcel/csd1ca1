@@ -2,13 +2,13 @@ name: CreateAzureWebApp
 
 env:
   AZURE_WEBAPP_PACKAGE_PATH: 'publish'              # set this to the path to your web app project
-  AZURE_WEBAPP_NAME: 'mmce-bmi-dev'
+  AZURE_WEBAPP_NAME: 'mmce-bmi'
 
-on:
- workflow_dispatch:        
+#on:
+# workflow_dispatch:        
 
-#on: 
-# push:
+on: 
+ push:
 #   branches: [ develop ]
  
 jobs:
@@ -16,14 +16,14 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+    - name: Branch name
+      #run: echo running on branch ${GITHUB_REF##*/}
+      run: echo Branch=${GITHUB_REF##*/} >> $GITHUB_ENV
 
       # Checkout code
     - uses: actions/checkout@main
       with:
-        ref: develop
-
-    - name: Branch name
-      run: echo running on branch ${GITHUB_REF##*/}
+        ref: ${{ env.Branch }}
 
       # Log into Azure
     - uses: azure/login@v1
@@ -44,15 +44,6 @@ jobs:
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: IAC-Templates/mstemplate.json
         parameters: webAppName=${{ env.AZURE_WEBAPP_NAME }}
-
-    - name: Get WebApp/FunctionApp publish profile
-      id: webapp-dev
-      uses: aliencube/publish-profile-actions@v1
-      env:
-        AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
-      with:
-        resourceGroupName: ${{ secrets.AZURE_RG }}
-        appName: ${{ env.AZURE_WEBAPP_NAME }}
 
     - name: Setup .NET Core SDK
       uses: actions/setup-dotnet@v1.7.2
@@ -78,9 +69,8 @@ jobs:
     - name: Run Azure webapp deploy action using publish profile credentials
       uses: azure/webapps-deploy@v2
       with: 
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}                        # your app name
-        publish-profile: ${{ steps.webapp-dev.outputs.profile }} # Retrieved from step above
-        #slot-name: 'production'
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}                       
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }} 
         package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp'
 
 
@@ -89,7 +79,6 @@ jobs:
       run: docker pull owasp/zap2docker-weekly
 
     - name: Run baseline scan
-#      run: docker run -v /report:/zap/wrk/:rw --user root -t owasp/zap2docker-weekly zap-baseline.py -t ${{env.URI}} -I -r zapreport.html
       run: docker run -v /report:/zap/wrk/:rw --user root -t owasp/zap2docker-weekly zap-baseline.py -t https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net -I -r zapreport.html
   
     - uses: actions/upload-artifact@v2
@@ -97,7 +86,6 @@ jobs:
       with:
         name: ZAPreport
         path: /report/zapreport.html
-
 
 # Run K6 Load scan
 
@@ -107,4 +95,3 @@ jobs:
         filename: k6/perftest1.js
         cloud: true
         token: ${{ secrets.K6_CLOUD_API_TOKEN }}
-#        flags: MY_HOSTNAME=${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net
