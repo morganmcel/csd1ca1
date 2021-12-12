@@ -99,4 +99,4 @@ jobs:
         filename: k6/perftest1.js
         cloud: true
         token: ${{ secrets.K6_CLOUD_API_TOKEN }}
-        parameters: MY_HOSTNAME=${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net
+        flags: MY_HOSTNAME=${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net
