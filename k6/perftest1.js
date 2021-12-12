@@ -67,7 +67,7 @@ function getRandomInt(min, max) {
 export default function () {
 
     // do an initial GET, force response body so that form can be subsequently submited
-    let res = http.get(`{__ENV.URI}/`, { "responseType": "text" });
+    let res = http.get(`http://${__ENV.MY_HOSTNAME}/`, { "responseType": "text" });
 
     // cookies automatically handled i.e. cookies sent by server will be re-presented by the client in all subsequent requests
     // until end of script
