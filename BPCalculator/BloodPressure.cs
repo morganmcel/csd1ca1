@@ -30,7 +30,7 @@ namespace BPCalculator
         {
             get
             {
-               BPCategory PatientStatus = BPCategory.High;
+                BPCategory PatientStatus;
                
                if ((Systolic >= 140) || (Diastolic >= 90))
                    PatientStatus = BPCategory.High;
@@ -41,7 +41,6 @@ namespace BPCalculator
                else if ((Systolic >= 70 && Systolic < 90) || (Diastolic >= 40))
                    PatientStatus = BPCategory.Low;
                else throw new InvalidOperationException ("Unexpected result");
-                 //throw new NotImplementedException("not implemented yet");
                return PatientStatus;
             }  
         }

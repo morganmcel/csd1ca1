@@ -37,8 +37,6 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # Deploy ARM template
-
     - name: Setup .NET Core SDK
       uses: actions/setup-dotnet@v1.7.2
       with:
