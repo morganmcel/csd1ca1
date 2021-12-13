@@ -81,8 +81,8 @@ jobs:
     - name: Run baseline scan
       run: docker run -v /report:/zap/wrk/:rw --user root -t owasp/zap2docker-weekly zap-baseline.py -t https://${{ env.AZURE_WEBAPP_NAME }}-${{ env.AZURE_ENVIRONMENT }}.azurewebsites.net -I -r zapreport.html
   
-    - uses: actions/upload-artifact@v2
-      name: upload ZAP report
+    - name: upload ZAP report
+      uses: actions/upload-artifact@v2
       with:
         name: ZAPreport
         path: /report/zapreport.html
@@ -110,7 +110,7 @@ jobs:
       
       # Checkout code
     - name: Checkout
-    - uses: actions/checkout@main
+      uses: actions/checkout@main
       with:
         ref: ${{ env.Branch }}
     - name: Checkout
