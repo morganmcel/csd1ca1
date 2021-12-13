@@ -82,11 +82,11 @@
             },
             {
               "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-              "value": "[reference('microsoft.insights/components/mmce-bmiPortal', '2015-05-01').InstrumentationKey]"
+              "value": "[reference('microsoft.insights/components/mmce-bmi', '2015-05-01').InstrumentationKey]"
             },
             {
               "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
-              "value": "[reference('microsoft.insights/components/mmce-bmiPortal', '2015-05-01').ConnectionString]"
+              "value": "[reference('microsoft.insights/components/mmce-bmi', '2015-05-01').ConnectionString]"
             },
             {
               "name": "ApplicationInsightsAgent_EXTENSION_VERSION",
