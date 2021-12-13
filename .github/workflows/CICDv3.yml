@@ -16,8 +16,25 @@ on:
 
 jobs:
 
-  build-and-deploy:
+  check-branch-environment: 
     runs-on: ubuntu-latest
+    steps:
+    - name: Branch name
+      run: echo Branch=${GITHUB_REF##*/} >> $GITHUB_ENV
+
+    - name: Check develop
+      run: if ${{ env.Branch }}=develop echo DEPLOY_TO=develop >> $GITHUB_ENV
+
+    - name: Check qa
+      run: if ${{ env.Branch }}=release echo DEPLOY_TO=staging >> $GITHUB_ENV
+
+    - name: Check develop
+      run: if ${{ env.Branch }}=master echo DEPLOY_TO=production >> $GITHUB_ENV
+      
+  build-and-deploy:
+    needs: check-branch-environment
+    runs-on: ubuntu-latest
+    environment: ${{ env.DEPLOY_TO }}
     steps:
     - name: Branch name
       run: echo Branch=${GITHUB_REF##*/} >> $GITHUB_ENV
