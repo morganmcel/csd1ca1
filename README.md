@@ -1,6 +1,7 @@
 # bp
 Blood Pressure Calculator
 ASP.Net Core
+Useful commands/info/future work
 
 # Prerequisites
 
@@ -43,15 +44,15 @@ or
 	
 	az deployment group create --resource-group testrg --name rollout01 --template-file azuredeploy.json --parameters '{ \"policyName\": { \"value\": \"policy2\" } }'
 
-
 ###### Preparing for CICD integration will need creation of credentials:
  
 	az ad sp create-for-rbac --name "{service-principal-name}" --sdk-auth --role contributor --scopes /subscriptions/{subscription-id}
-		or more specifically:
+		
+or more specifically:
+
 	az ad sp create-for-rbac --name {myApp} --role contributor --scopes /subscriptions/{subscription-id}/resourceGroups/{MyResourceGroup} --sdk-auth
 
 	az ad sp create-for-rbac --name CSD --role contributor --scopes /subscriptions/bf62df4b-3ac0-4f1d-9671-14a98c945779/resourceGroups/CSDCA1v2 --sdk-auth
-
 
 ###### Random useful commands: 
 
@@ -70,12 +71,11 @@ Further review needed, but possible steps to pull publish-profile in GitHub acti
 	$profile = $profile.Replace("`r", "").Replace("`n", "")
 	Write-Output "::set-output name=profile::$profile"
 
-	
-
 
 ##### Final set of steps
 
 	az group create --name CSDCA1v2 --location "North Europe"
 	az ad sp create-for-rbac --name CSD --role contributor --scopes /subscriptions/bf62df4b-3ac0-4f1d-9671-14a98c945779/resourceGroups/CSDCA1v2 --sdk-auth
+
 
 
