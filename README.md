@@ -33,11 +33,13 @@ Further information from: <https://docs.microsoft.com/en-us/azure/azure-resource
 ###### Options for creating resources from ARM Template: 
 
 	az deployment group create --resource-group CA1 --template-file template.json --parameters parameters.json
-		or
+
+or
 	
 	templateFile="IAC/resources.json"
 	az deployment group create --name blanktemplate --resource-group CSDCA1v2 --template-file $templateFile	
-		or
+
+or
 	
 	az deployment group create --resource-group testrg --name rollout01 --template-file azuredeploy.json --parameters '{ \"policyName\": { \"value\": \"policy2\" } }'
 
@@ -61,6 +63,13 @@ Further information from: <https://docs.microsoft.com/en-us/azure/azure-resource
 
 Powershell: 
 	
+	Get-AzWebAppSlotPublishingProfile -ResourceGroupName "CSDCA1v2" -Name "morganmc-bmi2Portal" -Slot "Dev"
+
+Further review needed, but possible steps to pull publish-profile in GitHub action programatically for specific slot
+	$Profile=Get-AzWebAppSlotPublishingProfile -ResourceGroupName "CSDCA1v2" -Name "morganmc-bmi2Portal" -Slot "Dev"
+	$profile = $profile.Replace("`r", "").Replace("`n", "")
+	Write-Output "::set-output name=profile::$profile"
+
 	
 
 
