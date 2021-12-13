@@ -92,6 +92,18 @@ jobs:
     needs: build-and-deploy
     runs-on: ubuntu-latest
     steps:
+    - name: Branch name
+      run: echo Branch=${GITHUB_REF##*/} >> $GITHUB_ENV
+
+    - name: Output branch-name
+      run: echo running on branch ${{ env.Branch }}
+      
+      # Checkout code
+    - name: Checkout code
+      uses: actions/checkout@main
+      with:
+        ref: ${{ env.Branch }}
+
     - name: Run k6 cloud test
       uses: k6io/action@v0.1
       with:
