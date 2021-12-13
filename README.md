@@ -52,7 +52,6 @@ or
 
 	az ad sp create-for-rbac --name CSD --role contributor --scopes /subscriptions/bf62df4b-3ac0-4f1d-9671-14a98c945779/resourceGroups/CSDCA1v2 --sdk-auth
 
-
 ###### Random useful commands: 
 
 	templateFile="IAC-Templates/mstemplate.json"
