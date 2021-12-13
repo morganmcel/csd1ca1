@@ -1,0 +1,51 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "name": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of Application Insights resource."
+      }
+    },
+    "type": {
+      "type": "string",
+      "metadata": {
+        "description": "Type of app you are deploying. This field is for legacy reasons and will not impact the type of App Insights resource you deploy."
+      }
+    },
+    "regionId": {
+      "type": "string",
+      "metadata": {
+        "description": "Which Azure Region to deploy the resource to. This must be a valid Azure regionId."
+      }
+    },
+    "tagsArray": {
+      "type": "object",
+      "metadata": {
+        "description": "See documentation on tags: https://docs.microsoft.com/azure/azure-resource-manager/management/tag-resources."
+      }
+    },
+    "requestSource": {
+      "type": "string",
+      "metadata": {
+        "description": "Source of Azure Resource Manager deployment"
+      }
+    }
+  },
+  "resources": [
+    {
+      "name": "[parameters('name')]",
+      "type": "microsoft.insights/components",
+      "location": "[parameters('regionId')]",
+      "tags": "[parameters('tagsArray')]",
+      "apiVersion": "2014-08-01",
+      "properties": {
+        "ApplicationId": "[parameters('name')]",
+        "Application_Type": "[parameters('type')]",
+        "Flow_Type": "Redfield",
+        "Request_Source": "[parameters('requestSource')]"
+      }
+    }
+  ]
+}
