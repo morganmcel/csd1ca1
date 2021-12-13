@@ -47,7 +47,9 @@ or
 ###### Preparing for CICD integration will need creation of credentials:
  
 	az ad sp create-for-rbac --name "{service-principal-name}" --sdk-auth --role contributor --scopes /subscriptions/{subscription-id}
-		or more specifically:
+		
+or more specifically:
+
 	az ad sp create-for-rbac --name {myApp} --role contributor --scopes /subscriptions/{subscription-id}/resourceGroups/{MyResourceGroup} --sdk-auth
 
 	az ad sp create-for-rbac --name CSD --role contributor --scopes /subscriptions/bf62df4b-3ac0-4f1d-9671-14a98c945779/resourceGroups/CSDCA1v2 --sdk-auth
