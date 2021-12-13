@@ -70,8 +70,6 @@ Further review needed, but possible steps to pull publish-profile in GitHub acti
 	$profile = $profile.Replace("`r", "").Replace("`n", "")
 	Write-Output "::set-output name=profile::$profile"
 
-	
-
 
 ##### Final set of steps
 
