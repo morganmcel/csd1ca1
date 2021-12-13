@@ -16,7 +16,6 @@ on:
 
 jobs:
   build-and-deploy:
-    needs: check-branch-environment
     runs-on: ubuntu-latest
     environment: develop
     steps:

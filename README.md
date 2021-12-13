@@ -1,6 +1,7 @@
 # bp
 Blood Pressure Calculator
 ASP.Net Core
+Useful commands/info/future work
 
 # Prerequisites
 
