@@ -20,7 +20,7 @@ jobs:
   build-and-deploy:
     needs: dependency_check
     runs-on: ubuntu-latest
-    environment: ${{ env.GH_ENVIRONMENT }}
+    environment: develop
     steps:
     - name: Branch name
       run: echo Branch=${GITHUB_REF##*/} >> $GITHUB_ENV
