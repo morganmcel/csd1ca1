@@ -43,7 +43,6 @@ or
 	
 	az deployment group create --resource-group testrg --name rollout01 --template-file azuredeploy.json --parameters '{ \"policyName\": { \"value\": \"policy2\" } }'
 
-
 ###### Preparing for CICD integration will need creation of credentials:
  
 	az ad sp create-for-rbac --name "{service-principal-name}" --sdk-auth --role contributor --scopes /subscriptions/{subscription-id}
