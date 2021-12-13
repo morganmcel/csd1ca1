@@ -13,6 +13,7 @@ Windows WSL has an outdated version of Azure CLI installed. To remove this and i
 
 ##### Azure PowerShell Setup
 On Windows 10, PowerShell 7.2 needed to be installed from <https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell> prior to installing Azure tools
+	
 	Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 	Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force -AllowClobber
 	Connect-AzAccount
