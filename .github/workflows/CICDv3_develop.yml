@@ -3,6 +3,8 @@ name: CreateAzureWebApp
 env:
   AZURE_WEBAPP_PACKAGE_PATH: 'publish'              # set this to the path to your web app project
   AZURE_WEBAPP_NAME: 'mmce-bmiPortal'
+  GH_ENVIRONMENT: 'develop'
+  AZURE_ENVIRONMENT: 'dev'
 
 #on:
 # workflow_dispatch:        
@@ -12,12 +14,13 @@ on:
     paths-ignore:
       - IAC-Templates/**
       - .github/workflows/**
- #   branches: [ develop ]
+    branches: [ develop ]
 
 jobs:
   build-and-deploy:
+    needs: dependency_check
     runs-on: ubuntu-latest
-    environment: develop
+    environment: ${{ env.GH_ENVIRONMENT }}
     steps:
     - name: Branch name
       run: echo Branch=${GITHUB_REF##*/} >> $GITHUB_ENV
@@ -34,12 +37,6 @@ jobs:
     - uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-#    - name: Generate random WebAppName
-#      run: echo AZURE_WEBAPP_NAME=bmi-$(openssl rand -hex 2) >> $GITHUB_ENV
-      
-#    - name: Set URI Variable  
-#      run: echo URI=https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net >> $GITHUB_ENV
 
       # Deploy ARM template
 
@@ -71,14 +68,18 @@ jobs:
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }} 
         package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp'
         slot-name: ${{ secrets.AZURE_WEBAPP_SLOT }} 
-        
 
 # Run Zap Scan on deployed image
+  zap_pen_test:
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    steps:
+
     - name: Pull Docker image for ZAP
       run: docker pull owasp/zap2docker-weekly
 
     - name: Run baseline scan
-      run: docker run -v /report:/zap/wrk/:rw --user root -t owasp/zap2docker-weekly zap-baseline.py -t https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net -I -r zapreport.html
+      run: docker run -v /report:/zap/wrk/:rw --user root -t owasp/zap2docker-weekly zap-baseline.py -t https://${{ env.AZURE_WEBAPP_NAME }}-${{ env.AZURE_ENVIRONMENT }}.azurewebsites.net -I -r zapreport.html
   
     - uses: actions/upload-artifact@v2
       name: upload ZAP report
@@ -87,10 +88,47 @@ jobs:
         path: /report/zapreport.html
 
 # Run K6 Load scan
-
+  k6_performance_test:
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    steps:
     - name: Run k6 cloud test
       uses: k6io/action@v0.1
       with:
         filename: k6/perftest1.js
         cloud: true
         token: ${{ secrets.K6_CLOUD_API_TOKEN }}
+
+  dependency_check:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Branch name
+      run: echo Branch=${GITHUB_REF##*/} >> $GITHUB_ENV
+
+    - name: Output branch-name
+      run: echo running on branch ${{ env.Branch }}
+      
+      # Checkout code
+    - name: Checkout
+    - uses: actions/checkout@main
+      with:
+        ref: ${{ env.Branch }}
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Depcheck
+      uses: dependency-check/Dependency-Check_Action@main
+      id: Depcheck
+      with:
+          project: 'BMI'
+          path: '.'
+          format: 'HTML'    
+          args: >
+            --failOnCVSS 7            
+          # fail if CVSS score (CVE scoring system) is High >=7
+          
+    - name: Upload Test results
+      uses: actions/upload-artifact@master
+      with:
+           name: Depcheck report
+           path: ${{github.workspace}}/reports
