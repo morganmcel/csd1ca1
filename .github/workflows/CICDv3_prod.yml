@@ -3,20 +3,20 @@ name: CreateAzureWebApp
 env:
   AZURE_WEBAPP_PACKAGE_PATH: 'publish'              # set this to the path to your web app project
   AZURE_WEBAPP_NAME: 'mmce-bmiPortal'
-  AZURE_ENVIRONMENT: 'QA'
+  AZURE_ENVIRONMENT: 'production'
 
 on:
   push:
     paths-ignore:
       - IAC-Templates/**
       - .github/workflows/**
-    branches: [ release ]
+    branches: [ master ]
 
 jobs:
   build-and-deploy:
     needs: dependency_check
     runs-on: ubuntu-latest
-    environment: staging
+    environment: production
     steps:
     - name: Branch name
       run: echo Branch=${GITHUB_REF##*/} >> $GITHUB_ENV
